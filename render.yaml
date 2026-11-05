@@ -1,5 +1,5 @@
 services:
-  # 1. Backend API (FastAPI)
+  # 1. Backend Service (FastAPI)
   - type: web
     name: opsguard-backend
     env: docker
@@ -10,10 +10,13 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        value: postgresql+psycopg2://opsguard_user:opsguard_password@localhost:5432/opsguard_db
+        fromDatabase:
+          name: opsguard-db
+          property: connectionString
       - key: JWT_SECRET_KEY
         value: opsguard_render_secret_key_2026_xyz
-    dockerCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port 10000
+    # Replaces postgres:// with postgresql+psycopg2:// dynamically at startup
+    dockerCommand: sh -c "export DATABASE_URL=$(echo $DATABASE_URL | sed 's|^postgres://|postgresql+psycopg2://|;s|^postgresql://|postgresql+psycopg2://|'); python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT"
 
   # 2. Frontend Web App (Next.js)
   - type: web
@@ -36,3 +39,7 @@ services:
     envVars:
       - key: PORT
         value: 8081
+
+databases:
+  - name: opsguard-db
+    plan: free
