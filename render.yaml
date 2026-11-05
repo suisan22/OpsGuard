@@ -6,11 +6,22 @@ services:
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
+    envVars:
+      - key: PORT
+        value: 10000
 
-  # Frontend App
+  # Frontend Web App
   - type: web
     name: opsguard-frontend
     env: docker
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
+    plan: free
+
+  # Background Worker
+  - type: worker
+    name: opsguard-worker
+    env: docker
+    dockerfilePath: ./worker/Dockerfile
+    dockerContext: ./worker
     plan: free
