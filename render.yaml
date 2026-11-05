@@ -1,5 +1,5 @@
 services:
-  # 1. Backend Service (FastAPI)
+  # 1. Backend API (FastAPI)
   - type: web
     name: opsguard-backend
     env: docker
@@ -9,10 +9,9 @@ services:
     envVars:
       - key: PORT
         value: 10000
-    # Overrides Uvicorn start command to bind to Render's $PORT dynamically
-    dockerCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
+    dockerCommand: sh -c "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
 
-  # 2. Frontend Service (Next.js)
+  # 2. Frontend Web App (Next.js)
   - type: web
     name: opsguard-frontend
     env: docker
@@ -23,7 +22,7 @@ services:
       - key: PORT
         value: 3000
 
-  # 3. Worker Service (Background Process on Free Web Tier)
+  # 3. Background Worker Process
   - type: web
     name: opsguard-worker
     env: docker
