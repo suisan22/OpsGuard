@@ -12,8 +12,8 @@ services:
       - key: DATABASE_URL
         value: postgresql+psycopg2://opsguard_user:opsguard_password@localhost:5432/opsguard_db
       - key: JWT_SECRET_KEY
-        value: opsguard_render_free_tier_secret_key_12345
-    dockerCommand: sh -c "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+        value: opsguard_render_secret_key_2026_xyz
+    dockerCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port 10000
 
   # 2. Frontend Web App (Next.js)
   - type: web
