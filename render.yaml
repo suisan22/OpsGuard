@@ -15,8 +15,7 @@ services:
           property: connectionString
       - key: JWT_SECRET_KEY
         value: opsguard_render_secret_key_2026_xyz
-    # Replaces postgres:// with postgresql+psycopg2:// dynamically at startup
-    dockerCommand: sh -c "export DATABASE_URL=$(echo $DATABASE_URL | sed 's|^postgres://|postgresql+psycopg2://|;s|^postgresql://|postgresql+psycopg2://|'); python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    dockerCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port 10000
 
   # 2. Frontend Web App (Next.js)
   - type: web
