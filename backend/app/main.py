@@ -1,11 +1,11 @@
-from app.api.routes import alerts, auth, dashboard, endpoints, history, incidents
 from contextlib import asynccontextmanager
-from app.core.errors import register_exception_handlers
-from prometheus_fastapi_instrumentator import Instrumentator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 
+from app.api.routes import alerts, auth, dashboard, endpoints, history, incidents
+from app.core.errors import register_exception_handlers
 import app.models  # noqa: F401  (registers all tables)
 from app.database.base import Base
 from app.database.session import engine
@@ -21,7 +21,7 @@ app = FastAPI(title="OpsGuard API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],  # Allows requests from your Render frontend and local dev
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
