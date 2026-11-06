@@ -1,7 +1,11 @@
 // One place that talks to the FastAPI backend.
 // Every page uses these functions instead of calling fetch() itself.
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://opsguard-backend.onrender.com';
+
 const TOKEN_KEY = 'opsguard_token';
 
 /* ---------- login token (saved in the browser) ---------- */
