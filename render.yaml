@@ -27,6 +27,8 @@ services:
     envVars:
       - key: PORT
         value: 3000
+      - key: NEXT_PUBLIC_API_BASE_URL
+        value: https://opsguard-backend.onrender.com
 
   # 3. Background Worker Process
   - type: web
